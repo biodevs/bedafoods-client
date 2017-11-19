@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+import {routing} from './app.routing';
 
 import { AppComponent } from './app.component';
 import { MaterializeModule } from 'ng2-materialize';
@@ -20,7 +23,9 @@ import { PlatesModule } from './plates/plates.module';
     BrowserModule,
     MaterializeModule.forRoot(),
     RestaurantsModule,
-    PlatesModule
+    PlatesModule,
+    RouterModule,
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]
