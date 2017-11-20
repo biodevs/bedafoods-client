@@ -1,37 +1,21 @@
-# FROM node:9
+FROM node:9.2-alpine
 
-# # RUN useradd --user-group --create-home --shell /bin/false bedafoods-client
+USER node
 
-# USER node
+ENV HOME /home/node
+ENV INSTALL_PATH $HOME/bedafoods-client
 
-# ENV HOME=/home/node
-
-
-# RUN mkdir $HOME/.npm-global
-# WORKDIR $HOME/.npm-global
-# ENV PATH=$HOME/.npm-global/bin:$PATH
-# ENV NPM_CONFIG_PREFIX=$HOME/.npm-global
-
-# RUN npm config set prefix $NPM_CONFIG_PREFIX
-
-# RUN chown -R $(whoami) $HOME/.npm-global
-
-# RUN npm install -g @angular/cli
-
-# COPY . .
-
-# RUN npm install
-
-# CMD ["npm", "start"]
-
-
-FROM node:9
-
-ENV INSTALL_PATH /bedafoods-client
-
-RUN npm install -g @angular/cli --unsafe-perm
 RUN mkdir -p $INSTALL_PATH
+
+ENV NPM_CONFIG_PREFIX ${HOME}/.npm-global
+RUN mkdir -p $NPM_CONFIG_PREFIX
+RUN npm config set prefix '${NPM_CONFIG_PREFIX}'
+
+ENV PATH=${NPM_CONFIG_PREFIX}/bin:$PATH
+
+RUN npm install -g @angular/cli
+
 WORKDIR $INSTALL_PATH
 COPY . .
-RUN npm install --unsafe-perm
+RUN npm install 
 CMD ["npm", "start"]
